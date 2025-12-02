@@ -13,7 +13,7 @@ from contact_manager.cli import ApplicationCLI
 def main():
     """Launches the Contact Manager application"""
     app = ApplicationCLI()
-    app.execute()
+    app.run()
 
 if __name__ == "__main__":
     main()
