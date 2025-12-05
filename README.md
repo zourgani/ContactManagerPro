@@ -240,3 +240,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [Rich](https://github.com/Textualize/rich) - Beautiful terminal formatting
 - [Python](https://www.python.org/) - Programming language
+
+## 🆕 Nouveautés - Version 1.0.1
