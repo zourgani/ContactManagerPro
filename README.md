@@ -16,6 +16,8 @@ A professional contact management application built with Python OOP and a beauti
 - 👀 **List all contacts** in a beautiful table
 - 🔍 **Search contacts** by name or email
 - 🗑️ **Delete contacts** with confirmation
+- 📤 **Export to CSV** - Export all contacts to a CSV file
+- 📥 **Import from CSV** - Import contacts from a CSV file
 - 💾 **Automatic JSON persistence**
 - 🎨 **Modern CLI** with Rich library
 - ✅ **Data validation** (email format, phone number)
@@ -64,13 +66,15 @@ python -m contact_manager.main
 
 ```text
 ╭───────── Main Menu ─────────╮
-│ CONTACT MANAGER v1.0        │
+│ CONTACT MANAGER v1.1        │
 │                             │
 │ [1] ➕ Add a new contact    │
 │ [2] 👀 Show all contacts    │
 │ [3] 🔍 Search for a contact │
 │ [4] 🗑️  Delete a contact    │
-│ [5] 🚪 Quit                 │
+│ [5] 📤 Export to CSV        │
+│ [6] 📥 Import from CSV      │
+│ [7] 🚪 Quit                 │
 ╰─────────────────────────────╯
 ```
 
@@ -102,16 +106,22 @@ Phone: 0612345678
 
 ```text
 ContactManagerPro/
-├── 📄 .gitignore             # Documentation
-├── 📄 README.md              # Package configuration
-├── 📄 requirements.txt       # Git ignore rules
-├── 📄 setup.py               # Data storage
+├── 📄 .gitignore             # Git ignore rules
+├── 📄 LICENSE                # MIT License
+├── 📄 Makefile               # Automation commands
+├── 📄 README.md              # Documentation
+├── 📄 requirements.txt       # Python dependencies
+├── 📄 setup.py               # Package configuration
+├── 📄 contacts.json          # Data storage (auto-generated)
+├── 📁 TestUnitaire/          # Unit tests
+│   ├── __init__.py
+│   └── test_manager.py       # Tests for manager & models
 └── 📁 contact_manager/       # Main package
     ├── __init__.py           # Package exports
-    ├── cli.py             # Contact & ContactError classes
-    ├── main.py            # ContactManager (CRUD operations)
-    ├── manager.py               # Rich CLI interface
-    └── models.py               # Entry point
+    ├── models.py             # Contact & ContactError classes
+    ├── manager.py            # ContactManager (CRUD + CSV)
+    ├── cli.py                # Rich CLI interface
+    └── main.py               # Entry point
 ```
 
 ---
@@ -150,7 +160,7 @@ ContactManagerPro/
 pip install pytest pytest-cov
 
 # Run tests
-pytest tests/ -v
+pytest TestUnitaire/ -v
 
 # With coverage
 pytest --cov=contact_manager --cov-report=html
@@ -205,6 +215,12 @@ manager.delete("jean@email.com")
 
 # Get all contacts
 contacts = manager.contacts
+
+# Export to CSV
+manager.export_csv("contacts.csv")
+
+# Import from CSV
+manager.import_csv("contacts.csv")
 ```
 
 ---
