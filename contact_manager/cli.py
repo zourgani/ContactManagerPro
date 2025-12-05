@@ -20,12 +20,14 @@ class ApplicationCLI:
     def display_menu(self):
         """Displays the main menu"""
         console.print(Panel.fit(
-            "[bold cyan]CONTACT MANAGER v1.0[/bold cyan]\n\n"
+            "[bold cyan]CONTACT MANAGER v1.1[/bold cyan]\n\n"
             "[1] ➕ Add a new contact\n"
             "[2] 👀 Show all contacts\n"
             "[3] 🔍 Search for a contact\n"
             "[4] 🗑️  Delete a contact\n"
-            "[5] 🚪 Quit",
+            "[5] 📤 Export to CSV\n"
+            "[6] 📥 Import from CSV\n"
+            "[7] 🚪 Quit",
             title="Main Menu", border_style="bright_blue"
         ))
     
@@ -54,7 +56,7 @@ class ApplicationCLI:
         while True:
             self.display_menu()
             choice = Prompt.ask("\n[bold]Your choice[/bold]", 
-                               choices=["1","2","3","4","5"])
+                               choices=["1","2","3","4","5","6","7"])
             
             if choice == "1":
                 name = Prompt.ask("Name")
@@ -80,6 +82,18 @@ class ApplicationCLI:
                           else f"[red]{result}[/red]")
             
             elif choice == "5":
+                filename = Prompt.ask("CSV filename", default="contacts.csv")
+                result = self.manager.export_csv(filename)
+                rprint(f"[green]{result}[/green]" if "✅" in result 
+                      else f"[red]{result}[/red]")
+            
+            elif choice == "6":
+                filename = Prompt.ask("CSV filename to import", default="contacts.csv")
+                result = self.manager.import_csv(filename)
+                rprint(f"[green]{result}[/green]" if "✅" in result 
+                      else f"[red]{result}[/red]")
+            
+            elif choice == "7":
                 if Confirm.ask("Do you really want to quit?"):
                     rprint("[bold red]👋 Goodbye![/bold red]")
                     break
