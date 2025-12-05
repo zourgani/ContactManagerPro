@@ -92,3 +92,41 @@ class ContactManager:
     
     def __str__(self):
         return f"Manager with {len(self)} contacts"
+    
+    def export_csv(self, filename: str = "contacts.csv") -> str:
+        """Exports contacts to a CSV file"""
+        import csv
+        
+        if not self.contacts:
+            return "❌ No contacts to export"
+        
+        try:
+            with open(filename, 'w', newline='', encoding='utf-8') as f:
+                writer = csv.writer(f)
+                writer.writerow(['Name', 'Email', 'Phone', 'Date Added'])
+                for c in self.contacts:
+                    writer.writerow([c.name, c.email, c.telephone, c.date_added])
+            
+            return f"✅ Exported {len(self.contacts)} contacts to {filename}"
+        except Exception as e:
+            return f"❌ Export error: {e}"
+    
+    def import_csv(self, filename: str = "contacts.csv") -> str:
+        """Imports contacts from a CSV file"""
+        import csv
+        
+        if not os.path.exists(filename):
+            return f"❌ File {filename} not found"
+        
+        try:
+            imported = 0
+            with open(filename, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    result = self.add(row['Name'], row['Email'], row['Phone'])
+                    if "successfully" in result:
+                        imported += 1
+            
+            return f"✅ Imported {imported} contacts from {filename}"
+        except Exception as e:
+            return f"❌ Import error: {e}"
